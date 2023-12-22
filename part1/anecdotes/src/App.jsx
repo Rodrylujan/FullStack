@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"
 
 const App = () => {
   const anecdotes = [
@@ -32,7 +32,9 @@ const App = () => {
     console.log(indexMaxValue)
     setMaxVote(indexMaxValue)
     console.log(newVotes)
+    
   }
+  
 
   return (
     <>
