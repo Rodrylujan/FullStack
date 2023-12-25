@@ -1,8 +1,8 @@
 import { useState } from "react";
+import contact from "../services/contact.js";
 
 /* eslint-disable react/prop-types */
-export const NewContact = ({ persons,newContact }) => {
-    
+export const NewContact = ({ persons, newContact, updateScream }) => {
   const [newName, setNewName] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
 
@@ -12,21 +12,24 @@ export const NewContact = ({ persons,newContact }) => {
   const onchangeNewNumber = (event) => {
     setNewPhoneNumber(event.target.value);
   };
-  const createContact = (event)=>{
+  const createContact = (event) => {
     event.preventDefault();
     if (!newName || !newPhoneNumber) return;
 
-    const existe = persons.some((persona) => persona.name === newName);
+    const contactQuery = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
 
-    if (existe) {
-      alert(`${newName} is al ready added to phonebook`);
+    if (contactQuery) {
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        const updateContact = {name:newName ,phone: newPhoneNumber}
+        contact.updateContact(contactQuery.id,updateContact).then(() => updateScream());
+      }
       return;
     }
     const newContac = { name: newName, phone: newPhoneNumber };
-    newContact(newContac)
+    newContact(newContac);
     setNewName("");
     setNewPhoneNumber("");
-  }
+  };
   return (
     <form onSubmit={createContact}>
       <h2>add anew </h2>
