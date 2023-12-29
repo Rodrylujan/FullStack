@@ -19,17 +19,17 @@ function App() {
     });
   };
 
-  const updateScream = () => { 
+  const updateScream = () => {
     contact.getAllContact().then((data) => setPersons(data));
-   }
+  };
 
-  const dedelteContact = (user) => {
-    if(!window.confirm(`Delete ${user.name}`)) return
+  const deleteContact = (user) => {
+    if (!window.confirm(`Delete ${user.name}`)) return;
     contact.deleteContact(user.id).then((response) => {
-      if(response.statusText==='OK'){
+      if (response.statusText === "OK") {
         contact.getAllContact().then((data) => setPersons(data));
-      }else{
-        alert("Se detecto un proble al eliminar el conacto")
+      } else {
+        alert("Se detecto un proble al eliminar el conacto");
       }
     });
   };
@@ -51,12 +51,20 @@ function App() {
     <div>
       <h2>Phonebook</h2>
       <QueryContact query={query} OnQueryPhone={OnQueryPhone}></QueryContact>
-      <NewContact newContact={newContact} persons={persons} updateScream={updateScream}></NewContact>
+      <NewContact
+        newContact={newContact}
+        persons={persons}
+        updateScream={updateScream}
+      ></NewContact>
       <h2>Numbers</h2>
       <div>
         {persons &&
           persons.map((person, index) => (
-            <Contact key={index} person={person} deleteContact={dedelteContact}></Contact>
+            <Contact
+              key={index}
+              person={person}
+              deleteContact={deleteContact}
+            ></Contact>
           ))}
       </div>
     </div>
